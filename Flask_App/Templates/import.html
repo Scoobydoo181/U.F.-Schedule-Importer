@@ -1,0 +1,8 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<form enctype="multipart/form-data" action="{{ url_for('calendar_import') }}">
+    <input type="file">
+    <button type="submit">Import</button>
+</form>
+{% endblock %}
