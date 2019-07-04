@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request
+from Static.Python.google_calendar import upload_gcal
+from multiprocessing import Process
 
 app = Flask(__name__)
     
 
-@app.route('/calendar_import')
+@app.route('/calendar_import', methods=['POST'])
 def calendar_import():
-    pass
+    upload_gcal(request.files['file'])
+    return render_template('success.html')
 
 @app.route('/')
 def home():

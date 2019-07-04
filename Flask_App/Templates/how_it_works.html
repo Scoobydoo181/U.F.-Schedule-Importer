@@ -1,5 +1,25 @@
 {% extends 'index.html' %}
 
 {% block content %}
+    <h1>How it works</h1>
 
+    <h4>Log in to ONE.UF</h4>
+    <p>Sign in with your GatorLink username and password and navigate to the student page. Then click on "Register/View Schedule".</p>
+    <img src="{{url_for('static', filename='Images/step_1.png')}}" alt="Step 1: ONE.UF">
+    <br>
+
+    <h4>View schedule</h4>
+    <p>Click on "Go to my schedule" under the current term.</p>
+    <img src="{{url_for('static', filename='Images/step_2.png')}}" alt="Step 2: View your schedule">
+    <br>
+
+    <h4>Download your schedule</h4>
+    <p>Click on the link in the top right corner that says "Download to my calendar". This will prompt you to save a file
+         named "UFSchedule.ics" to your hard drive. Save it somewhere you'll rememeber it.</p>
+    <img src="{{url_for('static', filename='Images/step_3.png')}}" alt="Step 3: Download your schedule">
+    <br>
+
+    <h4>Upload the file to Google Calendar</h4>
+    <p><a href="{{url_for('import_')}}">Simply add the calendar file</a> and our site will handle the rest.</p>
+    <br>
 {% endblock %}
