@@ -34,31 +34,31 @@ def upload_gcal(file_):
     
     service = build('calendar', 'v3', credentials=creds)
     #Open calendar file with schedule file
-    text = file_.read()
+    text = str(file_.read(), 'UTF-8').replace('\r\n', '\n')
     c = icalendar.Calendar.from_ical(text)
 
     r_rule_list = re.findall(r'RRULE:.*', text)
     #Loop through each event and add it to the calendar
     for i, course in enumerate(c.subcomponents[1:]):
-        r_rule = r_rule_list[i+2]
+        r_rule = r_rule_list[i+2]#.replace('Z', '')
 
         # Adjust for timezone
-        course['dtstart'].dt -= datetime.timedelta(days=1, hours=1)
-        course['dtend'].dt -= datetime.timedelta(days=1, hours=1)
+        course['dtstart'].dt -= datetime.timedelta(days=1)
+        course['dtend'].dt -= datetime.timedelta(days=1)
 
         data = {
             'summary': str(course["summary"]),
             'location': str(course['location']),
             'description': str(course['description']).replace('\n', ' ').rstrip(),
             'start': {
-                'dateTime' : str(course['dtstart'].dt).replace(' ','T'),
+                'dateTime' : str(course['dtstart'].dt).replace(' ','T').replace('-05:', '-04:'),
                 'timeZone' : 'America/New_York'
             },
             'end': { 
-                'dateTime' : str(course['dtend'].dt).replace(' ','T'),
+                'dateTime' : str(course['dtend'].dt).replace(' ','T').replace('-05:', '-04:'),
                 'timeZone' : 'America/New_York'
             },
-            'recurrence': r_rule,
+            'recurrence': [r_rule],
             'reminders': {
                 'useDefault': False,
                 'overrides': [
