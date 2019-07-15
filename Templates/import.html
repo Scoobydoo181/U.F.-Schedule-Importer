@@ -1,0 +1,12 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<form enctype="multipart/form-data" method="POST" action="{{ url_for('calendar_import') }}">
+    <input type="file" name="file">
+    <button type="submit" >Import</button>
+</form>
+
+<p>Add your calendar file and click "Import". This will take you to an authentication page with Google.
+    Sign in to the account you want the calendar added to, and you're on your way to perfect time management.
+</p>
+{% endblock %}
