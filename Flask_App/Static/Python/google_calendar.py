@@ -13,10 +13,6 @@ from googleapiclient.discovery import build
 def upload_gcal(file_):
     
     SCOPES = ['https://www.googleapis.com/auth/calendar.events']
-    flow = InstalledAppFlow.from_client_secrets_file('UF_Schedule_Importer/Flask_App/Static/Python/credentials.json', SCOPES)
-    creds = flow.run_local_server()
-    service = build('calendar', 'v3', credentials=creds)
-
     creds = None
         # The file token.pickle stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
@@ -24,6 +20,7 @@ def upload_gcal(file_):
     if os.path.exists(r'C:\Users\scoob\OneDrive\Documents\Programming Projects\Python\UF_Schedule_Importer\Flask_App\Static\Python\token.pickle'):
         with open(r'C:\Users\scoob\OneDrive\Documents\Programming Projects\Python\UF_Schedule_Importer\Flask_App\Static\Python\token.pickle', 'rb') as token:
             creds = pickle.load(token)
+
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
@@ -35,36 +32,42 @@ def upload_gcal(file_):
         with open(r'C:\Users\scoob\OneDrive\Documents\Programming Projects\Python\UF_Schedule_Importer\Flask_App\Static\Python\token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     
+    service = build('calendar', 'v3', credentials=creds)
     #Open calendar file with schedule file
-    c = icalendar.Calendar.from_ical(file_.read())
+    text = file_.read()
+    c = icalendar.Calendar.from_ical(text)
 
+    r_rule_list = re.findall(r'RRULE:.*', text)
     #Loop through each event and add it to the calendar
     for i, course in enumerate(c.subcomponents[1:]):
-        r_rule = re.search(r'RRULE:.*', str(file_.read())).group(i).rstrip()
+        r_rule = r_rule_list[i+2]
 
-        #Adjust for timezone
-        # course.begin -= datetime.timedelta(days=1, hours=-4)
-        # course.end -= datetime.timedelta(days=1, hours=-4)
+        # Adjust for timezone
+        course['dtstart'].dt -= datetime.timedelta(days=1, hours=1)
+        course['dtend'].dt -= datetime.timedelta(days=1, hours=1)
 
         data = {
-            'summary': course["summary"],
-            'location': course['location'],
-            'description': course['description'],
+            'summary': str(course["summary"]),
+            'location': str(course['location']),
+            'description': str(course['description']).replace('\n', ' ').rstrip(),
             'start': {
-                'dateTime' : str(course['dtstart']),
+                'dateTime' : str(course['dtstart'].dt).replace(' ','T'),
                 'timeZone' : 'America/New_York'
             },
             'end': { 
-                'dateTime' : str(course['dtend']),
+                'dateTime' : str(course['dtend'].dt).replace(' ','T'),
                 'timeZone' : 'America/New_York'
             },
             'recurrence': r_rule,
-            'reminders': str(course['alarm'])
+            'reminders': {
+                'useDefault': False,
+                'overrides': [
+                    {'method': 'popup', 'minutes': 5}
+                ]
+            }
         }
-        print(data)
         #send data
         response = service.events().insert(calendarId='primary', body=data).execute()
-        return response
 
 if __name__ == '__main__':
     f = open(r'UF_Schedule_Importer\Flask_App\Static\Python\UFSchedule.ics')
