@@ -11,7 +11,7 @@ def upload_gcal(file_):
     SCOPES = ['https://www.googleapis.com/auth/calendar.events'] 
     #Authenticate with user's Google account
     flow = InstalledAppFlow.from_client_secrets_file('Static/Python/credentials.json', SCOPES)
-    creds = flow.run_local_server()
+    creds = flow.run_local_server(host='ufscheduleimporter.herokuapp.com')
     service = build('calendar', 'v3', credentials=creds)
 
     #Create calendar  with schedule file
