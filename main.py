@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 from Static.Python.google_calendar import upload_gcal
 
-app = Flask(__name__, template_folder='./Templates')
+app = Flask(__name__, template_folder='./Templates',static_folder='./Static')
 
 @app.route('/')
 def home():
