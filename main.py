@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from Static.Python.google_calendar import upload_gcal
 
 app = Flask(__name__, template_folder='./Templates',static_folder='./Static')
@@ -20,6 +20,13 @@ def calendar_import():
     upload_gcal(request.files['file'])
     return render_template('success.html')
 
+@app.route('/success')
+def success():
+    return render_template('success.html')
+
+@app.route('/privacy-policy')
+def privacy_policy():
+    return render_template('privacy_policy.html')
 
 if __name__ == '__main__':    
-    app.run(debug=True)
+    app.run()
