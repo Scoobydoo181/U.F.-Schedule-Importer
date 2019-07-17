@@ -1,5 +1,9 @@
 {% extends 'index.html' %}
 
+{% block head %}
+    <title>Import - UF Schedule Importer</title>
+{% endblock %}
+
 {% block content %}
 <form enctype="multipart/form-data" method="POST" action="{{ url_for('calendar_import') }}">
     <input type="file" name="file">

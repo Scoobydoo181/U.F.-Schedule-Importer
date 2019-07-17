@@ -3,9 +3,13 @@
 
     <head lang="en-US">
         <meta charset="UTF-8">
+        <meta name="google-site-verification" content="Gpfe-i9csPnCz1bE4bkUJbm6_3_13fMgd-jVG_6Bl0w" />
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='CSS/stylesheet.css') }}">
         <link rel="shortcut icon" type="image/x-icon" href="{{ url_for('static', filename='Images/logo.jpg') }}"/>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+        {% block head %}
+
+        {% endblock %}
     </head>
     <body>
         <div class='navbar'>
@@ -20,6 +24,7 @@
             {% endblock %}
         </section>
         
+        <p class="footer"> <a href="{{url_for('privacy_policy.html')}}">Privacy Policy</a> </p>
 
 
 
