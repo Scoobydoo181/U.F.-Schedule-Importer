@@ -7,6 +7,7 @@ from google.oauth2.credentials import Credentials
 app = Flask(__name__, template_folder='./Templates',static_folder='./Static')
 app.secret_key = "646a20329427e36a6e2e17c2b2037697efd4d84ddbbab1bc6fa413e34dd835e2"
 
+code_verifier = '6a6e2e17c2b2037697efd4d84ddbbab1bc6fa413e34dd'
 
 @app.route('/')
 def home():
@@ -49,7 +50,7 @@ def authorize():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events'] 
     
     #Load application credentials and set redirect url for callback
-    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES)
+    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, code_verifier=code_verifier)
     flow.redirect_uri = url_for('oauth_callback', _external=True)
 
     #Get authorization url and save state to session
@@ -64,7 +65,7 @@ def oauth_callback():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events']
     state = session['state']
 
-    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, state=state)
+    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, state=state, code_verifier=code_verifier)
     flow.redirect_uri = url_for('oauth_callback', _external=True)
 
     #Exchange response for token
