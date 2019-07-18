@@ -72,7 +72,7 @@ def oauth_callback():
 
     oauth2_session, client_config = session_from_client_secrets_file('Static/Python/credentials.json',scopes=SCOPES, state=state)
 
-    flow = Flow(oauth2_session, client_type='web', client_config, redirect_uri, code_verifier)
+    flow = Flow(oauth2_session, 'web', client_config, redirect_uri, code_verifier)
 
     #Exchange response for token
     authorization_response = request.url
