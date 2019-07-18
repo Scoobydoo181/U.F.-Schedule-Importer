@@ -24,7 +24,7 @@ def import_():
     return render_template('import.html')
 
 #Endpoint for the form containing the UFSchedule.ics file
-@app.route('/calendar-import')
+@app.route('/calendar-import', methods=['POST', 'GET'])
 def calendar_import():
     """Parse file enclose in form if already authenticated, else send user to authenticate"""
 
