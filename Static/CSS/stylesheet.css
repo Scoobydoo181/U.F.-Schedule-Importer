@@ -97,7 +97,7 @@ section a, .footer a {
     font-weight: bold;
 }
 section a:visited, .footer a:visited{
-    color: rgb(77, 71, 98);
+    color: rgb(66, 38, 168);
 }
 section a:hover, .footer a:hover {
     text-decoration: underline;
