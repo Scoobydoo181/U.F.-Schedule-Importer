@@ -3,6 +3,8 @@ from Static.Python.google_calendar import upload_gcal, credentials_to_dict
 
 from google_auth_oauthlib.flow import Flow
 from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.helpers import session_from_client_secrets_file
+
 
 app = Flask(__name__, template_folder='./Templates',static_folder='./Static')
 app.secret_key = "646a20329427e36a6e2e17c2b2037697efd4d84ddbbab1bc6fa413e34dd835e2"
@@ -50,8 +52,10 @@ def authorize():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events'] 
     
     #Load application credentials and set redirect url for callback
-    flow = Flow(code_verifier=code_verifier).from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES)
-    flow.redirect_uri = url_for('oauth_callback', _external=True)
+    oauth2_session, client_config = session_from_client_secrets_file('Static/Python/credentials.json',scopes=SCOPES)
+    redirect_uri = url_for('oauth_callback', _external=True)
+
+    flow = Flow(oauth2_session, client_type='web', client_config, redirect_uri, code_verifier)
 
     #Get authorization url and save state to session
     authorization_url, state = flow.authorization_url(prompt='consent')
@@ -64,9 +68,11 @@ def authorize():
 def oauth_callback():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events']
     state = session['state']
+    redirect_uri = url_for('oauth_callback', _external=True)
 
-    flow = Flow(code_verifier=code_verifier).from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, state=state)
-    flow.redirect_uri = url_for('oauth_callback', _external=True)
+    oauth2_session, client_config = session_from_client_secrets_file('Static/Python/credentials.json',scopes=SCOPES, state=state)
+
+    flow = Flow(oauth2_session, client_type='web', client_config, redirect_uri, code_verifier)
 
     #Exchange response for token
     authorization_response = request.url
