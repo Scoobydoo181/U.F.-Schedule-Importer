@@ -50,7 +50,7 @@ def authorize():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events'] 
     
     #Load application credentials and set redirect url for callback
-    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, code_verifier=code_verifier)
+    flow = Flow(code_verifier=code_verifier).from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES)
     flow.redirect_uri = url_for('oauth_callback', _external=True)
 
     #Get authorization url and save state to session
@@ -65,7 +65,7 @@ def oauth_callback():
     SCOPES = ['https://www.googleapis.com/auth/calendar.events']
     state = session['state']
 
-    flow = Flow.from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, state=state, code_verifier=code_verifier)
+    flow = Flow(code_verifier=code_verifier).from_client_secrets_file('Static/Python/credentials.json', scopes=SCOPES, state=state)
     flow.redirect_uri = url_for('oauth_callback', _external=True)
 
     #Exchange response for token
