@@ -55,7 +55,7 @@ def authorize():
     oauth2_session, client_config = session_from_client_secrets_file('Static/Python/credentials.json',scopes=SCOPES)
     redirect_uri = url_for('oauth_callback', _external=True)
 
-    flow = Flow(oauth2_session, client_type='web', client_config, redirect_uri, code_verifier)
+    flow = Flow(oauth2_session, 'web', client_config, redirect_uri, code_verifier)
 
     #Get authorization url and save state to session
     authorization_url, state = flow.authorization_url(prompt='consent')
