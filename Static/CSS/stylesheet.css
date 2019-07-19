@@ -53,6 +53,10 @@ body {
     font-family: 'Roboto', 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: rgb(56, 64, 87);
     font-size: 1.1em;
+    width: 100%;
+}
+html {
+    width:100%;
 }
 
 section {
@@ -119,7 +123,7 @@ section a:hover, .footer a:hover {
 /* Tablet Portrait */
 @media screen and (max-width: 768px) {
     .navbar, section, .footer { 
-        width:99%; 
+        width:100%; 
     }
     
 }
