@@ -36,12 +36,12 @@ def calendar_import():
     #The user has already authenticated and the processing can be done
 
     credentials = Credentials(**session['credentials'])
+    del session['credentials'] 
 
     #Parse file and send data
     upload_gcal(session['file_text'], credentials)
-
-    #Store credentials
-    session['credentials'] = credentials_to_dict(credentials)
+    del session['file_text']
+    
 
     #Send the user to the success page
     return redirect(url_for('success'))
