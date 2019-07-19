@@ -107,3 +107,19 @@ section a:hover, .footer a:hover {
     text-decoration: none;
     color: black;
 }
+
+
+/* Tablet Landscape */
+@media screen and (max-width: 1060px) {
+    .navbar, section, .footer { 
+        width:67%; 
+    }
+      
+}
+/* Tablet Portrait */
+@media screen and (max-width: 768px) {
+    .navbar, section, .footer { 
+        width:99%; 
+    }
+    
+}
