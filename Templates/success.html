@@ -1,9 +1,14 @@
 {% extends 'index.html' %}
 
+{% block head %}
+    <title>Success - UF Schedule Importer</title>
+{% endblock %}
+
 {% block content %}
     <h1>Success!</h1>
-    <p><a href="https://calendar.google.com/calendar/">Check your Google calendar</a>, you schedule has now been added.</p>
+    <p><a target="_blank" href="https://calendar.google.com/calendar/">Check your Google calendar</a>, your schedule has now been added.</p>
 
     <p>Shout us out on social media!</p>
-    <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=I%20just%20added%20my%20whole%20class%20schedule%20to%20my%20Google%20calendar%20with%20this%20tool.%20www.google.com">fghj</a>
+    <a class="twitter-share-button" target="_blank" href="https://twitter.com/intent/tweet?text=I%20just%20added%20my%20whole%20class%20schedule%20to%20my%20Google%20calendar%20with%20this%20tool.%20www.google.com">Tweet Here</a>
+    <div style="position: relative; bottom: 4px;" class="fb-share-button" data-href="https://ufscheduleimporter.herokuapp.com/" data-layout="button" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fufscheduleimporter.herokuapp.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a></div>
 {% endblock %}

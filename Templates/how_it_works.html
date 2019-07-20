@@ -1,10 +1,14 @@
 {% extends 'index.html' %}
 
+{% block head %}
+    <title>How It Works - UF Schedule Importer</title>
+{% endblock %}
+
 {% block content %}
     <h1>How it works</h1>
 
     <h4>Log in to ONE.UF</h4>
-    <p>Sign in with your GatorLink username and password and navigate to the student page. Then click on "Register/View Schedule".</p>
+    <p> Go to <a target="_blank" href="https://one.uf.edu/">ONE.UF</a>,sign in with your GatorLink username and password and navigate to the student page. Then click on "Register/View Schedule".</p>
     <img src="{{url_for('static', filename='Images/step_1.png')}}" alt="Step 1: ONE.UF">
     <br>
 
